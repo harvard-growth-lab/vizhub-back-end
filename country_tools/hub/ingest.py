@@ -20,7 +20,7 @@ HUB_COLUMNS = {
 
 def string_to_array(series):
     def item_to_array(item):
-        if item is np.NaN:
+        if item is np.nan:
             item = []
         else:
             item = item.split(",")
@@ -43,8 +43,8 @@ def string_to_bool(series):
 
 
 def format_enum(string):
-    if string is np.NaN:
-        return np.NaN
+    if string is np.nan:
+        return np.nan
     else:
         return string.lower().replace("-", "_").replace(" / ", "_").replace(" ", "_")
 
@@ -67,7 +67,7 @@ if __name__ == "__main__":
     projects.data = string_to_array(projects.data)
 
     projects.announcement = projects.announcement.apply(
-        lambda x: x if x != "None" else np.NaN
+        lambda x: x if x != "None" else np.nan
     )
 
     projects.project_category = projects.project_category.apply(format_enum)
