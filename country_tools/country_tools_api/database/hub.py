@@ -40,3 +40,4 @@ class HubProjects(Base):
     status = Column(project_statuses)
     card_image_hi = Column(String)
     card_image_lo = Column(String)
+    card_image_alt_text = Column(String)
