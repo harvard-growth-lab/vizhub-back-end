@@ -1,5 +1,13 @@
 import pandas as pd
 import numpy as np
+import os
+
+SHEET_ID = os.environ.get("HUB_SHEET_ID", "1KyJlv_yZDIoCqI9raklejk2F3cb1_5fe9worK-iAnAc")
+GID = os.environ.get("HUB_SHEET_GID", "0")  # 0 = first tab ("Sheet1")
+
+SHEET_CSV_URL = (
+    f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv&gid={GID}"
+)
 
 HUB_COLUMNS = {
     "PROJECT NAME": "project_name",
@@ -15,6 +23,7 @@ HUB_COLUMNS = {
     "STATUS": "status",
     "CARD IMAGE-HI": "card_image_hi",
     "CARD IMAGE-LO": "card_image_lo",
+    "CARD IMAGE-ALT TEXT" : "card_image_alt_text",
 }
 
 
@@ -47,16 +56,21 @@ def format_enum(string):
         return np.nan
     else:
         return string.lower().replace("-", "_").replace(" / ", "_").replace(" ", "_")
+    
+def load_projects():
+    return pd.read_csv(SHEET_CSV_URL)
 
 
 if __name__ == "__main__":
 
-    raw_data_dir = "./raw_data"
+    # raw_data_dir = "./raw_data"
     processed_data_dir = "./processed_data"
 
-    projects = pd.read_csv(
-        f"{raw_data_dir}/Growth Lab Viz Hub_Master List - Sheet1.csv"
-    )
+    projects = load_projects()
+
+    # projects = pd.read_csv(
+    #     f"{raw_data_dir}/Growth Lab Viz Hub_Master List - Sheet1.csv"
+    # )
 
     projects.columns = [x.strip() for x in projects.columns]
     projects = projects.rename(columns=HUB_COLUMNS)
